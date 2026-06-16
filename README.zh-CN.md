@@ -67,16 +67,66 @@ Clash 代理轮换、可选双跳中继、超大 HTML Readability 分片 → 干
 
 ## 📊 性能对比
 
-> 以下数据来自维护者测试环境（2026-06）。竞品列为同类 **第三方 URL 抓取 / Reader API** 在相同链接下的表现，仅供参考。请本地运行 [`benchmarks/run_benchmark.py`](benchmarks/run_benchmark.py) 复现 OmniFetcher 一列。
+> 维护者测试环境实测（2025–2026）。完整截图图集：**[📷 Benchmark Gallery (EN)](docs/BENCHMARKS.md)** · **[📷 性能对比图集 (中文)](docs/BENCHMARKS.zh-CN.md)**
 
 <img src="docs/assets/omnifetcher-benchmark.png" alt="性能对比概览" width="720" />
 
-| 场景 | 链接类型 | **OmniFetcher** | Tavily | Exa | 通用 Reader API |
+| 场景 | 链接类型 | **OmniFetcher** | Tavily | Exa | Metaso / Reader API |
 |:--|:--|--:|--:|--:|--:|
-| arXiv 9 页 PDF | 直连 PDF | **0.8 s** ✅ | ~3 s（缓存） | 1.78 s | 2.8 s |
-| arXiv ~300 页 PDF | 超大 PDF | **3.3 s** ✅ | — | 4 s 超时 ❌ | 25 s 失败 ❌ |
-| 知乎问答 | 反爬 SPA | **1.6 s** ✅ | 6.9 s 拒绝 ❌ | 4 s 超时 ❌ | 5.5 s 空内容 ❌ |
-| 稀土掘金文章 | 静态 HTML + MD 清洗 | **435 ms** ✅ | — | 4 s 超时 ❌ | 700 ms「Please wait」❌ |
+| arXiv 9 页 PDF | 直连 PDF | **791 ms** ✅ | ~3 s（缓存估计） | ~1.8 s | 2.8 s |
+| arXiv ~300 页 PDF | 超大 PDF | **3.24 s** ✅ | 片段 | 4 s 超时 ❌ | 25.5 s 失败 ❌ |
+| 知乎问答 | 反爬 SPA | **1.61 s** ✅ | 拒绝访问 ❌ | 4 s 超时 ❌ | 5.5 s 空内容 ❌ |
+| 掘金文章 | HTML + MD 清洗 | **435 ms** ✅ | — | 4 s 超时 ❌ | 0.7 s 拦截页 ❌ |
+
+<details open>
+<summary><b>📸 arXiv 9 页 PDF — 并排截图</b></summary>
+<br />
+<table>
+<tr>
+<td width="33%" align="center"><b>OmniFetcher · 791 ms</b><br/><img src="docs/assets/benchmarks/feishu/bench_01.png" width="100%"/></td>
+<td width="33%" align="center"><b>Metaso · 2.8 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_02.png" width="100%"/></td>
+<td width="33%" align="center"><b>Exa · ~1.8 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_03.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 arXiv 300 页 PDF — 与竞品对比</b></summary>
+<br />
+<table>
+<tr>
+<td width="25%" align="center"><b>OmniFetcher · 3.24 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_04.png" width="100%"/></td>
+<td width="25%" align="center"><b>Metaso · 失败</b><br/><img src="docs/assets/benchmarks/feishu/bench_05.png" width="100%"/></td>
+<td width="25%" align="center"><b>Exa · 超时</b><br/><img src="docs/assets/benchmarks/feishu/bench_06.png" width="100%"/></td>
+<td width="25%" align="center"><b>Tavily · 片段</b><br/><img src="docs/assets/benchmarks/feishu/bench_07.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 知乎反爬页面</b></summary>
+<br />
+<table>
+<tr>
+<td width="25%" align="center"><b>OmniFetcher · 1.61 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_08.png" width="100%"/></td>
+<td width="25%" align="center"><b>Metaso · 5.5 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_09.png" width="100%"/></td>
+<td width="25%" align="center"><b>Tavily · 拒绝</b><br/><img src="docs/assets/benchmarks/feishu/bench_10.png" width="100%"/></td>
+<td width="25%" align="center"><b>Exa · 超时</b><br/><img src="docs/assets/benchmarks/feishu/bench_11.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 掘金文章（含 Markdown 清洗）</b></summary>
+<br />
+<table>
+<tr>
+<td width="33%" align="center"><b>OmniFetcher · 435 ms</b><br/><img src="docs/assets/benchmarks/feishu/bench_14.png" width="100%"/></td>
+<td width="33%" align="center"><b>Metaso · 拦截页</b><br/><img src="docs/assets/benchmarks/feishu/bench_12.png" width="100%"/></td>
+<td width="33%" align="center"><b>Exa · 超时</b><br/><img src="docs/assets/benchmarks/feishu/bench_13.png" width="100%"/></td>
+</tr>
+</table>
+</details>
 
 **冷启动 → 越用越快**（同域名重复访问）：
 
@@ -87,7 +137,6 @@ Clash 代理轮换、可选双跳中继、超大 HTML Readability 分片 → 干
 | 第 5 次+ | **~1 s** | 命中最优通路缓存 |
 
 ```bash
-# 本地复现 OmniFetcher 列
 python benchmarks/run_benchmark.py
 python benchmarks/run_benchmark.py --url "https://arxiv.org/pdf/2503.21088"
 ```

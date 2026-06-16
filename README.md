@@ -67,16 +67,66 @@ Proxy rotation (Clash), optional double-hop relay, huge-HTML readability map-red
 
 ## 📊 Benchmarks
 
-> Measured in maintainer test environment (June 2026). Competitor columns are **third-party fetch/crawl APIs** under the same URLs. Your mileage may vary — run [`benchmarks/run_benchmark.py`](benchmarks/run_benchmark.py) locally to reproduce OmniFetcher numbers.
+> Measured in maintainer test environment (2025–2026). Full screenshot gallery: **[📷 Benchmark Gallery (EN)](docs/BENCHMARKS.md)** · **[📷 性能对比图集 (中文)](docs/BENCHMARKS.zh-CN.md)**
 
 <img src="docs/assets/omnifetcher-benchmark.png" alt="Benchmark overview" width="720" />
 
-| Scenario | URL type | **OmniFetcher** | Tavily | Exa | Generic reader API |
+| Scenario | URL type | **OmniFetcher** | Tavily | Exa | Metaso / Reader API |
 |:--|:--|--:|--:|--:|--:|
-| arXiv 9-page PDF | Direct PDF | **0.8 s** ✅ | ~3 s (cached) | 1.78 s | 2.8 s |
-| arXiv ~300-page PDF | Large PDF | **3.3 s** ✅ | — | 4 s timeout ❌ | 25 s fail ❌ |
-| Zhihu Q&A | Anti-bot SPA | **1.6 s** ✅ | 6.9 s blocked ❌ | 4 s timeout ❌ | 5.5 s empty ❌ |
-| Juejin article | Static HTML + MD cleanup | **435 ms** ✅ | — | 4 s timeout ❌ | 700 ms “Please wait” ❌ |
+| arXiv 9-page PDF | Direct PDF | **791 ms** ✅ | ~3 s (cached est.) | ~1.8 s | 2.8 s |
+| arXiv ~300-page PDF | Large PDF | **3.24 s** ✅ | partial | 4 s timeout ❌ | 25.5 s fail ❌ |
+| Zhihu Q&A | Anti-bot SPA | **1.61 s** ✅ | access denied ❌ | 4 s timeout ❌ | 5.5 s empty ❌ |
+| Juejin article | HTML + MD cleanup | **435 ms** ✅ | — | 4 s timeout ❌ | 0.7 s gate page ❌ |
+
+<details open>
+<summary><b>📸 arXiv 9-page PDF — side-by-side screenshots</b></summary>
+<br />
+<table>
+<tr>
+<td width="33%" align="center"><b>OmniFetcher · 791 ms</b><br/><img src="docs/assets/benchmarks/feishu/bench_01.png" width="100%"/></td>
+<td width="33%" align="center"><b>Metaso · 2.8 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_02.png" width="100%"/></td>
+<td width="33%" align="center"><b>Exa · ~1.8 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_03.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 arXiv 300-page PDF — OmniFetcher vs competitors</b></summary>
+<br />
+<table>
+<tr>
+<td width="25%" align="center"><b>OmniFetcher · 3.24 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_04.png" width="100%"/></td>
+<td width="25%" align="center"><b>Metaso · fail</b><br/><img src="docs/assets/benchmarks/feishu/bench_05.png" width="100%"/></td>
+<td width="25%" align="center"><b>Exa · timeout</b><br/><img src="docs/assets/benchmarks/feishu/bench_06.png" width="100%"/></td>
+<td width="25%" align="center"><b>Tavily · partial</b><br/><img src="docs/assets/benchmarks/feishu/bench_07.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 Zhihu anti-bot page</b></summary>
+<br />
+<table>
+<tr>
+<td width="25%" align="center"><b>OmniFetcher · 1.61 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_08.png" width="100%"/></td>
+<td width="25%" align="center"><b>Metaso · 5.5 s</b><br/><img src="docs/assets/benchmarks/feishu/bench_09.png" width="100%"/></td>
+<td width="25%" align="center"><b>Tavily · denied</b><br/><img src="docs/assets/benchmarks/feishu/bench_10.png" width="100%"/></td>
+<td width="25%" align="center"><b>Exa · timeout</b><br/><img src="docs/assets/benchmarks/feishu/bench_11.png" width="100%"/></td>
+</tr>
+</table>
+</details>
+
+<details>
+<summary><b>📸 Juejin article (includes Markdown cleanup)</b></summary>
+<br />
+<table>
+<tr>
+<td width="33%" align="center"><b>OmniFetcher · 435 ms</b><br/><img src="docs/assets/benchmarks/feishu/bench_14.png" width="100%"/></td>
+<td width="33%" align="center"><b>Metaso · gate page</b><br/><img src="docs/assets/benchmarks/feishu/bench_12.png" width="100%"/></td>
+<td width="33%" align="center"><b>Exa · timeout</b><br/><img src="docs/assets/benchmarks/feishu/bench_13.png" width="100%"/></td>
+</tr>
+</table>
+</details>
 
 **Cold → warm learning** (same domain, repeated fetches):
 
@@ -87,7 +137,6 @@ Proxy rotation (Clash), optional double-hop relay, huge-HTML readability map-red
 | 5th+ | **~1 s** | Cache hit on optimal lane |
 
 ```bash
-# Reproduce OmniFetcher column locally
 python benchmarks/run_benchmark.py
 python benchmarks/run_benchmark.py --url "https://arxiv.org/pdf/2503.21088"
 ```
