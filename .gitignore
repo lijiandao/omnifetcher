@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.env
+*.log
+
+# Runtime learning cache (keep example configs in git)
+config/proxy_state/
+config/smart_detector_config.json.bak
+
+# Playwright / browser profiles
+.playwright/
+LightReadPlaywrightEdge/
+adapt-fetch-edge/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Bootstrap helper (local only)
+_bootstrap_extract.py

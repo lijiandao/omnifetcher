@@ -1,0 +1,1 @@
+"""Adapt-Fetch component."""

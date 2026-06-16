@@ -1,0 +1,24 @@
+serper:
+  api_keys:
+  - 9724ec082a1bac0bc2e056349e92258956d40fd4-deprecated
+  - 5c89fa4ffc84a77b3d3fda6767fd15fd0ddca5dd-deprecated
+  - baa5fe504016d362d9b8f7d61d0dd00423e37953-deprecated
+  - ec5a5e6dead87aa687d9f3a0a636c454380d63d9-deprecated
+  - ad2be5815d63d83d5a4a17b30f40825d666b2352-deprecated
+  - 91ea250d710929aaa38b2a18243233660de75f18-deprecated
+  - e0ae7b11eb757400070c14ecdd85b3e5805ba433-deprecated
+  - 8d2935a6b29c29faac39cd81d7c2275657b8a777-deprecated
+  - 95cae227e136321e98c14c12b6f01dbfc1193b85-deprecated
+  - 24714f2eb7bc22c28a86666451a5ae867682425e-deprecated
+  - 86e11e3c3bfc482e2916309cfb74bbe68fa5e21c-deprecated
+  - 0b635aa56e723f6cd9142e3971f0cd3e13933c24-deprecated
+  - f381905f4f6a84640e733af950ef1f15a8b21e71-deprecated
+  - f381905f4f6a84640e733af950ef1f15a8b21e71-deprecated
+  - cc7b27e704a3db4e53d90850fbc0f79840aba78d
+  - d2a275d70b6e138432646a8e751511c6411ebc6e
+  - d026bb743d141149e7bc75cd57e3b4c7022f5c95-deprecated
+  - d402fdd80dbdbd42b087f7890f5435ec190408c6-deprecated
+  - 834aad820fcc212ae5ee43e2e186bed3b67e8051
+  - ee6acab1377f6eeb9517d3c08071b4a907a175b9
+  endpoint: https://google.serper.dev/scholar
+  timeout: 30
